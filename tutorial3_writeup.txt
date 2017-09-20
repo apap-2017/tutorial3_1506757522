@@ -1,0 +1,49 @@
+1. Ringkasan
+   Pada tutorial kali ini, saya belajar bagaimana untuk memisahkan model yang menyimpan beberapa bagian dari student.
+   Saya juga belajar bagaimana membuat dan menggunakan service sebagai jembatan dari model dan controller. Service 
+   merupakan interface yang memiliki beberapa method untuk mengolah data dari model pada class Student.
+2. 1. localhost:8080/student/add?npm=12345&name=chanek&gpa=3.43
+	  apakah hasilnya? Jika error, tuliskan penjelasan Anda.
+		  data akan tersimpan (lihat gambar 1)
+   2. localhost:8080/student/add?npm=12345&name=chanek
+      apakah hasilnya? Jika error, tuliskan penjelasan Anda.
+   		  data tidak tersimpan dan terjadi error karena data yang ingin disimpan tidak memiliki gpa yang tidak boleh kosong (lihat gambar 2)
+   3. localhost:8080/student/add?npm=12345&name=chanek&gpa=3.43 lalu buka localhost:8080/student/view?npm=12345
+      apakah data Student tersebut muncul? Jika tidak, mengapa?
+		  data muncul (lihat gambar 3-1 dan 3-2)
+   4. Coba matikan program dan jalankan kembali serta buka localhost:8080/student/view?npm=12345
+      apakah data Student tersebut muncul? Jika tidak, mengapa?
+      	  data tidak muncul karena data tidak tersimpan secara local dan data belum tersimpan pada database, jadi
+      	  ketika belum ada data yang dimasukkan terlebih dahulu, maka tidak akan data yang dapat dimunculkan (lihat gambar 4)
+   5. localhost:8080/student/add?npm=12345&name=chanek&gpa=3.43 lalu buka localhost:8080/student/viewall
+      apakah data Student tersebut muncul?
+      	  muncul karena data yang dimasukkan dan disimpan secara local hanya 1 buat data (lihat gambar 5-1 dan 5-2)
+   6. Coba tambahkan data Student lainnya dengan NPM yang berbeda, lalu buka localhost:8080/student/viewall,
+      apakah data Student tersebut muncul?
+          muncul 2 buah data karena data yang dimasukkan ada 2 buah, jadi ada 2 buah data yang tersimpan pada local(lihat gambar 5-1, 5-2, 6-1, 6-2)
+   Latihan
+   1. 1 mengubah method pada controller yang awalnya merupakan request parameter menjadi path variable.
+      2 mengubah request mapping hingga sesuai dengan ketentuan soal (localhost:8080/student/view/14769)
+      3 melakukan penyimpanan object student yang memimiliki npm pada pada path yang tertulis
+      4 membuat error.html yang akan menampilkan tulisan error sesuai ketentuan soal
+      Lihat gambar 7-1, 7-2, dan 7-3
+   2. 1 membuat method deleteStudent pada StudentService
+      2 implementasi method deleteStudent pada InMemoryStudentService
+      3 pada InMemoryStudentService dilakukan pencarian object student berdasarkan npm yang dimasukkan
+      4 apabila ditemukan, maka object student tersebut akan di remove dari list
+      5 buat method deleteStudent pada controller dengan path variabel npm sesuai ketentuan soal
+      6 deleteStudent pada controller akan memanggil INMemoryStudentService untuk menjalankan method deleteSetudent
+      7 apabila tidak ditemukan npm yang diinginkan, maka akan terlempar ke halaman error
+      Lihat gambar 8-1, 8-2, 8-3, 8-4
+3. Method selectStudent dijalankan dengan melakukan looping sebanyak listStudent yang dimiliki.
+   Untuk setiap object student pada list akan dilakukan pengecekan apakah object student memiliki npm yang sama dengan yang kita inginkan.
+   Apabila npm pada object student sama dengan yang kita inginkan, maka akan dikembalikan object student.
+   Sebaliknya apabila tidak ditemukan, maka akan mengembalikan null
+4. Method delete dimulai dengan membuat method deleteStudent dengan parameter npm pada StudentService.
+   Setelah itu, pada InMemoryStudentService, dilakukan override method dari Student Service untuk deleteStudent.
+   Pada override, diinisiasikan object StudentModel dengan nilai null, lalu dilakukan looping sebanyak studentList.
+   Pada looping akan dilakukan pengecekan apakan npm yang diinginkan sama dengan npm setiap object pada studentList.
+   Apabila terjadi kecocokan, maka object student tersebut akan di remove dari list sebaliknya apabila tidak ditemukan maka tidak akan dilakukan apapun.
+   Selanjutnya pada controller, buat deletePath dengan Path Variable yang berisi npm dan buat request mapping sesuai dengan permintaan soal.
+   Pada controller lakukan pencarian pada npm yang tertulis pada path, apabila terjadi kecocokan maka controller akan memanggil method deleteStudent melalui studentService.
+   Setelah method deleteStudent dijalankan, deletePath akan memanggil delete.html. Apabila tidak ditemukan npm yang diinginkan maka akan menampilkan error message sesuai soal.
